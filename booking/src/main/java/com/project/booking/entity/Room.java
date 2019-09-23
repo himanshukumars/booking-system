@@ -1,11 +1,15 @@
 package com.project.booking.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Fetch;
@@ -16,6 +20,7 @@ import org.hibernate.annotations.FetchMode;
 public class Room {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSeq")
+	@Id
 	private String roomTypeId;
 	private String bedType;
 	private Integer noOfPersons;
@@ -28,7 +33,10 @@ public class Room {
 	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
 	@Fetch(FetchMode.JOIN)
 	private Hotel hotel;
-
+	
+	@OneToMany(targetEntity = RoomBooking.class, mappedBy = "roomType", orphanRemoval = false, fetch = FetchType.LAZY)
+	private List<RoomBooking> roomsBooked;
+	
 	public Integer getNoOfRooms() {
 		return noOfRooms;
 	}

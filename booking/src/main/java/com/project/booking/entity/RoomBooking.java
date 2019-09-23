@@ -1,7 +1,11 @@
 package com.project.booking.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -9,19 +13,34 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
-public class RoomBooking {
+@IdClass(RoomBookingId.class)
+public class RoomBooking implements Serializable {
 
-	private Room room;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
+	@JoinColumn(name = "room_type_id", insertable = false, updatable = false)
 	@Fetch(FetchMode.JOIN)
+	private Room roomType;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reservation_id", insertable = false, updatable = false)
+	@Fetch(FetchMode.JOIN)
+	@Id
 	private Reservation reservation;
-	
+
 	private Integer noOfRooms;
 
-	public Room getRoom() {
-		return room;
+	public Room getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(Room roomType) {
+		this.roomType = roomType;
 	}
 
 	public Integer getNoOfRooms() {
@@ -30,10 +49,6 @@ public class RoomBooking {
 
 	public void setNoOfRooms(Integer noOfRooms) {
 		this.noOfRooms = noOfRooms;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
 	}
 
 	public Reservation getReservation() {

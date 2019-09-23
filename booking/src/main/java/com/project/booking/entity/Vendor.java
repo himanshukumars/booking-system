@@ -3,22 +3,18 @@ package com.project.booking.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Vendor {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer vendorId;
+	private String vendorId;
 	private String vendorName;
 	private String vendorUrl;
-
-	@OneToMany(targetEntity = Hotel.class, mappedBy = "vendor_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	
+	@ManyToMany(mappedBy = "hotelVendors")
 	private List<Hotel> hotels;
 
 	public List<Hotel> getHotels() {
@@ -29,11 +25,11 @@ public class Vendor {
 		this.hotels = hotels;
 	}
 
-	public Integer getVendorId() {
+	public String getVendorId() {
 		return vendorId;
 	}
 
-	public void setVendorId(Integer vendorId) {
+	public void setVendorId(String vendorId) {
 		this.vendorId = vendorId;
 	}
 

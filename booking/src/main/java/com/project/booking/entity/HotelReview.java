@@ -20,7 +20,7 @@ public class HotelReview {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer reviewId;
+	private Long reviewId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
@@ -34,11 +34,11 @@ public class HotelReview {
 	private String comments;
 	private Date lastUpdatedDate;
 
-	public Integer getReviewId() {
+	public Long getReviewId() {
 		return reviewId;
 	}
 
-	public void setReviewId(Integer reviewId) {
+	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
 

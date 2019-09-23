@@ -1,25 +1,54 @@
 package com.project.booking.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer locationId;
+	private Long locationId;
+	private String region;
 	private String city;
 	private String state;
 	private String country;
 
-	public Integer getLocationId() {
+	@OneToMany(targetEntity = Hotel.class, mappedBy = "location", orphanRemoval = false, fetch = FetchType.LAZY)
+	private List<Hotel> hotels;
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public List<Hotel> getHotels() {
+		return hotels;
+	}
+
+	public void setHotels(List<Hotel> hotels) {
+		this.hotels = hotels;
+	}
+
+	public Long getLocationId() {
 		return locationId;
 	}
 
-	public void setLocationId(Integer locationId) {
+	public void setLocationId(Long locationId) {
 		this.locationId = locationId;
 	}
 

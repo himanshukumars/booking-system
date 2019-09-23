@@ -18,19 +18,11 @@ public class BookingService {
 
 	public List<HotelDetails> getHotelDetailsInfo(String hotelName) {
 		
-		List<Hotel> hotels;
+		List<Hotel> hotels=null;
 		List<HotelDetails> listOfHotels = new ArrayList<HotelDetails>();
 		
 		try {
-			hotels = hotelRepository.findByIdRoom(hotelName);
 			
-			if(hotels!=null) {
-				for(Hotel hotel : hotels) {
-					HotelDetails hotelDetails = new HotelDetails();
-					hotelDetails.setHotel(hotel);
-					listOfHotels.add(hotelDetails);
-				}
-			}
 		}catch(Exception e) {
 			
 		}

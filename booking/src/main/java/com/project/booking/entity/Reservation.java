@@ -34,15 +34,15 @@ public class Reservation {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "guest_id", insertable = false, updatable = false)
 	@Fetch(FetchMode.JOIN)
-
 	private Guest guest;
+	
 	private PaymentStatus paymentStatus;
 	private ReservationStatus reservationStatus;
 	private String requests;
 	private Date checkInDate;
 	private Date checkOutDate;
 	
-	@OneToMany(targetEntity = RoomBooking.class, mappedBy = "reservation_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = RoomBooking.class, mappedBy = "reservation", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<RoomBooking> roomsBooked;
 
 	public String getReservationId() {

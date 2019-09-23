@@ -19,30 +19,29 @@ public class Guest {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserSeq")
-	private Integer guestId;
+	private Long guestId;
 	private String firstName;
 	private String lastName;
 	private String emailId;
 	private String address;
-	
 	private String phoneNumber;
 	
 	@ManyToMany
 	@JoinTable(
 			  name = "guest_review", 
 			  joinColumns = @JoinColumn(name = "guest_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "room_type_id"))
+			  inverseJoinColumns = @JoinColumn(name = "review_id"))
 	List<HotelReview> guestReviews;
 	
-	@OneToMany(targetEntity = Reservation.class, mappedBy = "guest_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Reservation.class, mappedBy = "guest", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<Reservation> reservations;
 	
 
-	public Integer getGuestId() {
+	public Long getGuestId() {
 		return guestId;
 	}
 
-	public void setGuestId(Integer guestId) {
+	public void setGuestId(Long guestId) {
 		this.guestId = guestId;
 	}
 

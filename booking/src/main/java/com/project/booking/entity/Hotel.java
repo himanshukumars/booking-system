@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -21,13 +23,17 @@ public class Hotel {
 	@GenericGenerator(name = "hotelId", strategy = "com.project.booking.util.HotelIdGenerator")
 	@GeneratedValue(generator = "hotelId")
 	private String hotelId;
-	private Location location;
-	private String hotelName;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "vendor_id", insertable = false, updatable = false)
+	@JoinColumn(name = "location_id")
 	@Fetch(FetchMode.JOIN)
-	private Vendor vendor;
+	private Location location;
+
+	private String hotelName;
+
+	@ManyToMany
+	@JoinTable(name = "hotel_vendors", joinColumns = @JoinColumn(name = "hotel_id"), inverseJoinColumns = @JoinColumn(name = "vendor_id"))
+	private List<Vendor> hotelVendors;
 
 	private String address;
 	private String phoneNumber;
@@ -35,13 +41,13 @@ public class Hotel {
 	private String checkInTime;
 	private String checkOutTime;
 
-	@OneToMany(targetEntity = Room.class, mappedBy = "hotel_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Room.class, mappedBy = "hotel", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<Room> rooms;
 
-	@OneToMany(targetEntity = HotelReview.class, mappedBy = "hotel_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = HotelReview.class, mappedBy = "hotel", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<HotelReview> hotelReviews;
 
-	@OneToMany(targetEntity = Reservation.class, mappedBy = "hotel_id", orphanRemoval = false, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = Reservation.class, mappedBy = "hotel", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<Reservation> hotelReservations;
 
 	public List<HotelReview> getHotelReviews() {
@@ -52,12 +58,12 @@ public class Hotel {
 		this.hotelReviews = hotelReviews;
 	}
 
-	public Vendor getVendor() {
-		return vendor;
+	public List<Vendor> getHotelVendors() {
+		return hotelVendors;
 	}
 
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
+	public void setHotelVendors(List<Vendor> hotelVendors) {
+		this.hotelVendors = hotelVendors;
 	}
 
 	public List<Reservation> getHotelReservations() {

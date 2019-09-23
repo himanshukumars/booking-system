@@ -1,20 +1,15 @@
 package com.project.booking.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.booking.entity.Guest;
 import com.project.booking.model.HotelDetails;
-import com.project.booking.entity.Reservation;
-import com.project.booking.model.BookingDetails;
 import com.project.booking.service.BookingService;
 
 @RestController
