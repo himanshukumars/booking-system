@@ -1,5 +1,7 @@
 package com.project.booking.model;
 
+import com.project.booking.entity.Hotel;
+
 public class RoomDTO {
 	
 	private BedType bedType;
@@ -9,6 +11,7 @@ public class RoomDTO {
 	private Boolean isACRoom;
 	private Boolean isTVAvailable;
 	private String hotelId;
+	private Hotel hotel;
 	
 	public String getHotelId() {
 		return hotelId;
@@ -51,6 +54,12 @@ public class RoomDTO {
 	}
 	public void setIsTVAvailable(Boolean isTVAvailable) {
 		this.isTVAvailable = isTVAvailable;
+	}
+	public Hotel getHotel() {
+		return hotel;
+	}
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	

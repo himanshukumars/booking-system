@@ -92,9 +92,7 @@ public class HotelService {
 		try {
 
 			Hotel hotel = modelMapper.map(hotelDTO, Hotel.class);
-
 			if (hotel != null) {
-				
 				Location location = locationRepository.findById(hotelDTO.getLocationId()).get();
 				hotel.setLocation(location);
 				
@@ -111,12 +109,13 @@ public class HotelService {
 	public String addRoomsToAHotel(RoomDTO roomDTO) {
 
 		try {
+			
 			Optional<Hotel> hotelObj = hotelRepository.findById(roomDTO.getHotelId());
 
 			if (roomDTO != null && hotelObj.isPresent()) {
 				
+				roomDTO.setHotel((Hotel) hotelObj.get());
 				Room room = modelMapper.map(roomDTO, Room.class);
-				room.setHotel((Hotel) hotelObj.get());
 				roomRepository.save(room);
 				
 				return ApplicationConstants.SUCCESS;
@@ -129,12 +128,14 @@ public class HotelService {
 	public String addRatings(ReviewDTO reviewDTO) {
 
 		try {
+			
 			Optional<Hotel> hotelObj = hotelRepository.findById(reviewDTO.getHotelId());
 			List<Guest> guestObj = guestRepository.findByEmailId(reviewDTO.getEmailId());
 
 			if (reviewDTO != null && hotelObj.isPresent() && guestObj.size()!=0) {
 				
 				modelMapper.getConfiguration().setAmbiguityIgnored(true);
+
 				HotelReview review = modelMapper.map(reviewDTO, HotelReview.class);
 				review.setHotel((Hotel) hotelObj.get());
 				review.setLastUpdatedDate(new Date());
