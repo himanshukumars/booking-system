@@ -23,12 +23,12 @@ public class RoomBooking implements Serializable {
 
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "room_type_id", insertable = false, updatable = false)
+	@JoinColumn(name = "room_type_id")
 	@Fetch(FetchMode.JOIN)
 	private Room roomType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reservation_id", insertable = false, updatable = false)
+	@JoinColumn(name = "reservation_id")
 	@Fetch(FetchMode.JOIN)
 	@Id
 	private Reservation reservation;

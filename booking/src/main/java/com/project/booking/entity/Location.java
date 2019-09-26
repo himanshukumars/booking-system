@@ -7,12 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Location {
@@ -24,7 +19,7 @@ public class Location {
 	private String city;
 	private String state;
 	private String country;
-
+	
 	@OneToMany(targetEntity = Hotel.class, mappedBy = "location", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<Hotel> hotels;
 
@@ -41,7 +36,7 @@ public class Location {
 	}
 
 	public void setHotels(List<Hotel> hotels) {
-		this.hotels = hotels;
+        this.hotels.forEach(x -> x.setLocation(this));
 	}
 
 	public Long getLocationId() {

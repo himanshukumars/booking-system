@@ -7,11 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.JoinColumn;;
+import javax.persistence.SequenceGenerator;;
 
 @Entity
 @SequenceGenerator(initialValue = 1000, name = "UserSeq")
@@ -26,11 +23,7 @@ public class Guest {
 	private String address;
 	private String phoneNumber;
 	
-	@ManyToMany
-	@JoinTable(
-			  name = "guest_review", 
-			  joinColumns = @JoinColumn(name = "guest_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "review_id"))
+	@OneToMany(targetEntity = HotelReview.class, mappedBy = "guest", orphanRemoval = false, fetch = FetchType.LAZY)
 	List<HotelReview> guestReviews;
 	
 	@OneToMany(targetEntity = Reservation.class, mappedBy = "guest", orphanRemoval = false, fetch = FetchType.LAZY)

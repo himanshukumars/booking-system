@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,23 +13,25 @@ import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @SequenceGenerator(name = "RoomSeq", initialValue = 2000)
 public class Room {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSeq")
+	@GenericGenerator(name = "roomTypeId", strategy = "com.project.booking.util.RoomTypeGenerator")
+	@GeneratedValue(generator = "roomTypeId")
 	@Id
 	private String roomTypeId;
 	private String bedType;
 	private Integer noOfPersons;
 	private Integer noOfRooms;
 	private String roomType;
-	private Boolean isACRoom;
-	private Boolean isTVAvailable;
+	private boolean isACRoom;
+	private boolean isTVAvailable;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
+	@JoinColumn(name = "hotel_id")
 	@Fetch(FetchMode.JOIN)
 	private Hotel hotel;
 	
@@ -85,19 +86,19 @@ public class Room {
 		this.roomType = roomType;
 	}
 
-	public Boolean getIsACRoom() {
+	public boolean getIsACRoom() {
 		return isACRoom;
 	}
 
-	public void setIsACRoom(Boolean isACRoom) {
+	public void setIsACRoom(boolean isACRoom) {
 		this.isACRoom = isACRoom;
 	}
 
-	public Boolean getIsTVAvailable() {
+	public boolean getIsTVAvailable() {
 		return isTVAvailable;
 	}
 
-	public void setIsTVAvailable(Boolean isTVAvailable) {
+	public void setIsTVAvailable(boolean isTVAvailable) {
 		this.isTVAvailable = isTVAvailable;
 	}
 

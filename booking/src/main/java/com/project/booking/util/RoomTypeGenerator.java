@@ -10,12 +10,12 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.project.booking.dao.ReservationRepository;
+import com.project.booking.dao.HotelRepository;
 
-public class ReservationIdGenerator implements IdentifierGenerator {
+public class RoomTypeGenerator implements IdentifierGenerator {
 
 	@Autowired
-	ReservationRepository reservationRepository;
+	HotelRepository hotelRepository;
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
@@ -23,18 +23,18 @@ public class ReservationIdGenerator implements IdentifierGenerator {
 		Connection connection = session.connection();		
 		try {
 			Statement statement=connection.createStatement();
-			ResultSet rs=statement.executeQuery("select count(reservation_id) as Id from reservation");
+			ResultSet rs=statement.executeQuery("select count(hotel_id) as Id from room");
 
-			String prefix = "ODHOT";
+			String prefix = "RN";
 			if(rs.next()) {
-				Integer rsCount=rs.getInt(1)+10;
-				return (prefix + rsCount.toString());
+				Integer hotelCount=rs.getInt(1)+1;
+				return (prefix + hotelCount.toString());
 	             
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		return null;
 	}
 }

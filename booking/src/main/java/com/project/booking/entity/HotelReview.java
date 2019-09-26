@@ -1,7 +1,6 @@
 package com.project.booking.entity;
 
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Fetch;
@@ -23,12 +21,14 @@ public class HotelReview {
 	private Long reviewId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
+	@JoinColumn(name = "hotel_id")
 	@Fetch(FetchMode.JOIN)
 	private Hotel hotel;
 
-	@ManyToMany(mappedBy = "guestReviews")
-	private List<Guest> guest;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "guest_id")
+	@Fetch(FetchMode.JOIN)
+	private Guest guest;
 
 	private Integer rating;
 	private String comments;
@@ -50,11 +50,11 @@ public class HotelReview {
 		this.hotel = hotel;
 	}
 
-	public List<Guest> getGuest() {
+	public Guest getGuest() {
 		return guest;
 	}
 
-	public void setGuest(List<Guest> guest) {
+	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
 

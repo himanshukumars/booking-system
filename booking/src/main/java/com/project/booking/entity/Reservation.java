@@ -27,12 +27,12 @@ public class Reservation {
 	private String reservationId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "hotel_id", insertable = false, updatable = false)
+	@JoinColumn(name = "hotel_id")
 	@Fetch(FetchMode.JOIN)
 	private Hotel hotel;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "guest_id", insertable = false, updatable = false)
+	@JoinColumn(name = "guest_id")
 	@Fetch(FetchMode.JOIN)
 	private Guest guest;
 	
