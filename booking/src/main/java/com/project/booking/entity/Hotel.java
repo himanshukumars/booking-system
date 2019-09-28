@@ -66,14 +66,6 @@ public class Hotel {
 		this.hotelVendors = hotelVendors;
 	}
 
-	public List<Reservation> getHotelReservations() {
-		return hotelReservations;
-	}
-
-	public void setHotelReservations(List<Reservation> hotelReservations) {
-		this.hotelReservations = hotelReservations;
-	}
-
 	public List<Room> getRooms() {
 		return rooms;
 	}

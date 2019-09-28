@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,28 +38,31 @@ public class HotelService {
 	private HotelRepository hotelRepository;
 
 	@Autowired
-	LocationRepository locationRepository;
+	private LocationRepository locationRepository;
 
 	@Autowired
-	GuestRepository guestRepository;
+	private GuestRepository guestRepository;
 	
 	@Autowired
-	VendorRepository vendorRepository;
+	private VendorRepository vendorRepository;
 
 	@Autowired
-	RoomRepository roomRepository;
+	private RoomRepository roomRepository;
 
 	@Autowired
-	HotelReviewRepository hotelReviewRepository;
+	private HotelReviewRepository hotelReviewRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HotelService.class);
 
 	public List<HotelDTO> getHotelDetailsInfo(HotelDTO hotelDTO) {
+		
+		logger.info("Entering Hotel Information service .. ");
 		
 		Iterable<Hotel> hotel = null;
 		List<Vendor> hotelVendors = new ArrayList<Vendor>();
 		List<HotelDTO> list = new ArrayList<HotelDTO>();
 		
 		try {
-			
 			if(hotelDTO.getHotelName()!=null)
 				hotel = hotelRepository.findByHotelName(hotelDTO.getHotelName());
 			
@@ -81,7 +86,7 @@ public class HotelService {
 			}
 			
 		}catch(Exception e) {
-			
+			logger.error("Error occured while serving requests in getHotelDetailsInfo(): " + e.toString());
 		}
 		
 		return list;
@@ -89,8 +94,9 @@ public class HotelService {
 
 	public String addHotel(HotelDTO hotelDTO) {
 
+		logger.info("Entering Add Hotel service .. ");
+		
 		try {
-
 			Hotel hotel = modelMapper.map(hotelDTO, Hotel.class);
 			if (hotel != null) {
 				Location location = locationRepository.findById(hotelDTO.getLocationId()).get();
@@ -101,15 +107,16 @@ public class HotelService {
 			}
 
 		} catch (Exception e) {
-
+			logger.error("Error occured while serving requests in addHotel(): " + e.toString());
 		}
 		return ApplicationConstants.FAILED;
 	}
 
 	public String addRoomsToAHotel(RoomDTO roomDTO) {
 
+		logger.info("Entering Add Rooms service .. ");
+		
 		try {
-			
 			Optional<Hotel> hotelObj = hotelRepository.findById(roomDTO.getHotelId());
 
 			if (roomDTO != null && hotelObj.isPresent()) {
@@ -121,14 +128,16 @@ public class HotelService {
 				return ApplicationConstants.SUCCESS;
 			}
 		} catch (Exception e) {
+			logger.error("Error occured while serving requests in addRoomsToAHotel(): " + e.toString());
 		}
 		return ApplicationConstants.FAILED;
 	}
 
 	public String addRatings(ReviewDTO reviewDTO) {
 
+		logger.info("Entering Add Ratings service .. ");
+		
 		try {
-			
 			Optional<Hotel> hotelObj = hotelRepository.findById(reviewDTO.getHotelId());
 			List<Guest> guestObj = guestRepository.findByEmailId(reviewDTO.getEmailId());
 
@@ -146,6 +155,7 @@ public class HotelService {
 				return ApplicationConstants.SUCCESS;
 			}
 		} catch (Exception e) {
+			logger.error("Error occured while serving requests in addRatings(): " + e.toString());
 		}
 		return ApplicationConstants.FAILED;
 	}

@@ -2,19 +2,24 @@ package com.project.booking.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.booking.dao.GuestRepository;
 import com.project.booking.dao.HotelRepository;
 import com.project.booking.dao.ReservationRepository;
-import com.project.booking.dao.RoomRepository;
 import com.project.booking.entity.Guest;
 import com.project.booking.entity.Hotel;
 import com.project.booking.entity.Reservation;
 import com.project.booking.model.BookingDTO;
+import com.weddini.throttling.Throttling;
+import com.weddini.throttling.ThrottlingType;
 
 @Service
 public class BookingService {
@@ -26,33 +31,37 @@ public class BookingService {
 	private HotelRepository hotelRepository;
 
 	@Autowired
-	GuestRepository guestRepository;
+	private GuestRepository guestRepository;
 
 	@Autowired
-	RoomRepository roomRepository;
+	private ReservationRepository reservationRepository;
+	
+	private static final Logger logger = LoggerFactory.getLogger(BookingService.class);
 
-	@Autowired
-	ReservationRepository reservationRepository;
+	public BookingDTO getBookingDetails(String reservationId) {
 
-	public BookingDTO getBookingDetails(String emailId, String reservationId) {
-
+		logger.info("Entering Booking Information service .. ");
+		
 		try {
-			List<Guest> guest = guestRepository.findByEmailId(emailId);
+			Optional<Reservation> reservationObj = reservationRepository.findById(reservationId);
 
-			if (guest.size() != 0) {
-				Reservation reservation = reservationRepository.findByReservationIdAndGuest(reservationId,
-						guest.get(0));
+			if (reservationObj.isPresent()) {
+				Reservation reservation = reservationObj.get();
+				
 				BookingDTO bookingDTO = modelMapper.map(reservation, BookingDTO.class);
+				bookingDTO.setHotel(null);
 
 				return bookingDTO;
 			}
 		} catch (Exception e) {
-
+			logger.error("Error occured while serving requests in getBookingDetails(): " + e.toString());
 		}
 		return null;
 	}
 
 	public List<BookingDTO> getAllBookings(String emailId) {
+		
+		logger.info("Entering Bookings Information service .. ");
 
 		List<BookingDTO> bookings = new ArrayList<BookingDTO>();
 
@@ -69,13 +78,15 @@ public class BookingService {
 				}
 			}
 		} catch (Exception e) {
-
+			logger.error("Error occured while serving requests in getAllBookings(): " + e.toString());
 		}
 		return bookings;
 	}
 
+	@Throttling(type = ThrottlingType.RemoteAddr, limit = 100, timeUnit = TimeUnit.MINUTES)
 	public String bookAHotel(BookingDTO bookingDTO) {
 		
+		logger.info("Entering Booking service .. ");
 		String bookingReference = "";
 		
 		try {
@@ -92,7 +103,7 @@ public class BookingService {
 			}
 			
 		}catch(Exception e) {
-			
+			logger.error("Error occured while serving requests in bookAHotel(): " + e.toString());
 		}
 		return bookingReference;
 	}
