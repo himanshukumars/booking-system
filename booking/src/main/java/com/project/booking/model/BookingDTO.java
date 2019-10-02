@@ -14,6 +14,8 @@ public class BookingDTO {
 	private Date checkInDate;
 	private Date checkOutDate;
 	private String hotelId;
+	private Integer noOfRooms;
+	private String roomTypeId;
 	private String emailId;
 	private Hotel hotel;
 	private Guest guest;
@@ -77,6 +79,18 @@ public class BookingDTO {
 	}
 	public void setGuest(Guest guest) {
 		this.guest = guest;
+	}
+	public Integer getNoOfRooms() {
+		return noOfRooms;
+	}
+	public void setNoOfRooms(Integer noOfRooms) {
+		this.noOfRooms = noOfRooms;
+	}
+	public String getRoomTypeId() {
+		return roomTypeId;
+	}
+	public void setRoomTypeId(String roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
 	

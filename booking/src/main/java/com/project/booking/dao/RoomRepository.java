@@ -8,4 +8,7 @@ import com.project.booking.entity.Room;
 @Repository
 public interface RoomRepository extends CrudRepository<Room, String> {
 
+	
+	
+
 }

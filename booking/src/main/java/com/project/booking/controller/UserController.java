@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.booking.entity.Guest;
 import com.project.booking.model.UserDTO;
+import com.project.booking.service.IUserService;
 import com.project.booking.service.UserService;
 import com.project.booking.util.ApplicationConstants;
 
@@ -23,7 +24,7 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
-	UserService userService;
+	IUserService userService;
 
 	@RequestMapping("/{emailId}")
 	public ResponseEntity<UserDTO> getUser(@PathVariable("emailId") String emailId) {

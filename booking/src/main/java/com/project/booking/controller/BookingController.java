@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.booking.model.BookingDTO;
-import com.project.booking.service.BookingService;
+import com.project.booking.service.IBookingService;
 import com.project.booking.util.ApplicationConstants;
 
 
@@ -25,7 +25,7 @@ public class BookingController {
 	private static final Logger logger = LoggerFactory.getLogger(BookingController.class);
 	
 	@Autowired
-	BookingService bookingService;
+	IBookingService bookingService;
 
 	@RequestMapping("/reservation/{reservationId}")
 	public ResponseEntity<BookingDTO> getBookingInfo(@PathVariable("reservationId") String reservationId) {

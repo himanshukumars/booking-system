@@ -14,7 +14,7 @@ import com.project.booking.model.UserDTO;
 import com.project.booking.util.ApplicationConstants;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
 	@Autowired
 	private GuestRepository guestRepository;

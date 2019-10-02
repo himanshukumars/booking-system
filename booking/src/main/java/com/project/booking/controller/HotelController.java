@@ -16,6 +16,7 @@ import com.project.booking.model.HotelDTO;
 import com.project.booking.model.ReviewDTO;
 import com.project.booking.model.RoomDTO;
 import com.project.booking.service.HotelService;
+import com.project.booking.service.IHotelService;
 import com.project.booking.util.ApplicationConstants;
 
 @RestController
@@ -25,7 +26,7 @@ public class HotelController {
 	private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
 	
 	@Autowired
-	HotelService hotelService;
+	IHotelService hotelService;
 
 	@PostMapping("/hotel/info")
 	public ResponseEntity<List<HotelDTO>> getHotelDetails(@RequestBody HotelDTO hotelDTO) {

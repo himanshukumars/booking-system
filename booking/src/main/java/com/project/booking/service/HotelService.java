@@ -29,7 +29,7 @@ import com.project.booking.model.RoomDTO;
 import com.project.booking.util.ApplicationConstants;
 
 @Service
-public class HotelService {
+public class HotelService implements IHotelService{
 
 	@Autowired
 	private ModelMapper modelMapper;

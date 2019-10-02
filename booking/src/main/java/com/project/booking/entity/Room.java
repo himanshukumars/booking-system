@@ -34,10 +34,10 @@ public class Room {
 	@JoinColumn(name = "hotel_id")
 	@Fetch(FetchMode.JOIN)
 	private Hotel hotel;
-	
+
 	@OneToMany(targetEntity = RoomBooking.class, mappedBy = "roomType", orphanRemoval = false, fetch = FetchType.LAZY)
 	private List<RoomBooking> roomsBooked;
-	
+
 	public Integer getNoOfRooms() {
 		return noOfRooms;
 	}
@@ -99,6 +99,21 @@ public class Room {
 	}
 
 	public void setIsTVAvailable(boolean isTVAvailable) {
+		this.isTVAvailable = isTVAvailable;
+	}
+	public List<RoomBooking> getRoomsBooked() {
+		return roomsBooked;
+	}
+
+	public void setRoomsBooked(List<RoomBooking> roomsBooked) {
+		this.roomsBooked = roomsBooked;
+	}
+
+	public void setACRoom(boolean isACRoom) {
+		this.isACRoom = isACRoom;
+	}
+
+	public void setTVAvailable(boolean isTVAvailable) {
 		this.isTVAvailable = isTVAvailable;
 	}
 
