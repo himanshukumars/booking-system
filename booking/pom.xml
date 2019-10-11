@@ -12,18 +12,19 @@
 	<groupId>com.project</groupId>
 	<artifactId>booking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>booking</name>
 	<description>Hotel Booking System</description>
 
 	<properties>
 		<java.version>11</java.version>
+		<docker.image.prefix>springio</docker.image.prefix>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
 		<junit.jupiter.verion>5.5.0</junit.jupiter.verion>
 	</properties>
-
+<!-- 
 	<repositories>
 		<repository>
 			<id>spring-boot-throttling-repo</id>
@@ -33,7 +34,7 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 	<dependencies>
 		<dependency>
@@ -73,11 +74,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+
+	<!-- 	<dependency>
 			<groupId>com.weddini.throttling</groupId>
 			<artifactId>spring-boot-throttling-starter</artifactId>
 			<version>0.0.9</version>
-		</dependency>
+		</dependency> -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -114,12 +117,27 @@
 		</dependencies>
 	</dependencyManagement>
 
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.9</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+				</configuration>
+			</plugin>
+
+
+			<!-- To ensure the jar is unpacked before the docker image is created 
+				we add some configuration for the dependency plugin -->
+
+			
 		</plugins>
 	</build>
 

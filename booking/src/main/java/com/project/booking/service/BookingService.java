@@ -22,8 +22,6 @@ import com.project.booking.entity.Reservation;
 import com.project.booking.entity.Room;
 import com.project.booking.entity.RoomBooking;
 import com.project.booking.model.BookingDTO;
-import com.weddini.throttling.Throttling;
-import com.weddini.throttling.ThrottlingType;
 
 @Service
 public class BookingService implements IBookingService {
@@ -93,7 +91,7 @@ public class BookingService implements IBookingService {
 		return bookings;
 	}
 
-	@Throttling(type = ThrottlingType.RemoteAddr, limit = 100, timeUnit = TimeUnit.MINUTES)
+	//@Throttling(type = ThrottlingType.RemoteAddr, limit = 100, timeUnit = TimeUnit.MINUTES)
 	public String bookAHotel(BookingDTO bookingDTO) {
 
 		logger.info("Entering Booking service .. ");
